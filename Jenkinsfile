@@ -18,5 +18,20 @@ pipeline{
                 }
             }
         }
+        stage("pushing the helm chart to nexus"){
+            steps{
+                script{
+                    withCredentials([string(credentialsId: 'nexus', variable: 'nex')]) {
+                        dir('kubernetes/') {
+                            sh '''
+                            helmversion = &( helm show chart myapp | grep version | cut -d: -f 2 | tr -d ' ')
+                            tar -czvf myapp-${helmversion}.tgz myapp/  
+                            curl -u admin:$nex http://172.16.1.30:8081/repository/helm-hosted/ --upload-file myapp-${helmversion}.tgz -v
+                            '''
+                        }
+                    }
+                }
+            }
+        }
     }
 }
