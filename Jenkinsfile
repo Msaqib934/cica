@@ -33,8 +33,13 @@ pipeline{
                 }
             } 
         }
-        stage("Deploy To Kuberates Cluster"){
-            sh "kubectl get nodes"
+        stage('Deploy Application on kubernetes') {
+            steps {
+                dir ("kubernetes/"){ 
+                    sh 'helm list'
+				    sh 'helm upgrade --install --set image.repository="172.16.1.30:8083/springapp" --set image.tag="${VERSION}" myjavaapp myapp/ ' 
+                }
+            }
         }
     }
 }
