@@ -23,7 +23,7 @@ pipeline{
                 script{
                     withCredentials([string(credentialsId: 'nexus', variable: 'nex')]) {
                         dir('kubernetes/') {
-                            sh 'helmversion = $( helm show chart myapp | grep version | cut -d: -f 2 | tr -d ' ')'
+                            sh 'helmversion = "helm show chart myapp | grep version | cut -d: -f 2 | tr -d ' '"'
                             sh 'tar -czvf myapp-${helmversion}.tgz myapp/'  
                             sh 'curl -u admin:$nex http://172.16.1.30:8081/repository/helm-hosted/ --upload-file myapp-${helmversion}.tgz -v'
                         }
