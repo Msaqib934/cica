@@ -31,7 +31,10 @@ pipeline{
                         }
                     }
                 }
-            }
+            } 
+        }
+        stage("Deploy To Kuberates Cluster"){
+            sh "kubectl get nodes"
         }
     }
 }
