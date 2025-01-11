@@ -13,8 +13,7 @@ pipeline{
             steps{
                 script {
                     withSonarQubeEnv(credentialsId: 'sonar-pass') {
-                        sh 'chmod +x gradlew'
-                        sh './gradlew sonarqube'
+                        sh 'sonar-scanner -Dsonar.projectKey=my-app -Dsonar.sources=src -Dsonar.host.url=http://34.226.192.62:9000/'
                     }
                 }
             }   
