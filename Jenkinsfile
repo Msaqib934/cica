@@ -2,6 +2,7 @@ pipeline{
     agent any
     environment {
         VERSION = "${env.BUILD_ID}"
+        SCANNER_HOME = tool 'sonar-scanner'
     }
     stages{
         stage("Sonarqube"){
@@ -13,7 +14,7 @@ pipeline{
             steps{
                 script {
                     withSonarQubeEnv(credentialsId: 'sonar-pass') {
-                        sh 'sonar-scanner -Dsonar.projectKey=my-app -Dsonar.sources=src -Dsonar.host.url=http://34.226.192.62:9000/'
+                        sh '$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectKey=my-app -Dsonar.sources=src -Dsonar.host.url=http://34.226.192.62:9000/'
                     }
                 }
             }   
