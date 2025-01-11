@@ -14,7 +14,7 @@ pipeline{
             steps{
                 script {
                     withSonarQubeEnv(credentialsId: 'sonar-pass') {
-                        sh '$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectKey=my-app -Dsonar.sources=src -Dsonar.host.url=http://34.226.192.62:9000/'
+                        sh 'sonar-scanner -Dsonar.projectKey=my-app -Dsonar.sources=src -Dsonar.host.url=http://34.226.192.62:9000/'
                     }
                 }
             }   
